@@ -1,0 +1,45 @@
+{
+  "name": "baas_orm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prettier:comment": "pretty formating code",
+    "prettier": "prettier --write \"src/**/*.ts\"",
+    "eslint:comment": "eslint check",
+    "eslint": "eslint --fix src --ext .ts --max-warnings=0",
+    "dev:comment": "run dev",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "jest",
+    "test-c": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yjhatfdu/baas_orm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yjhatfdu/baas_orm/issues"
+  },
+  "homepage": "https://github.com/yjhatfdu/baas_orm#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.1",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.28.0",
+    "jest": "^27.0.4",
+    "prettier": "^2.3.1",
+    "ts-jest": "^27.0.2",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.3.2"
+  },
+  "description": "",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "jison": "^0.4.18",
+    "nanoid": "^3.1.23",
+    "ts-node": "^9.1.1"
+  }
+}
