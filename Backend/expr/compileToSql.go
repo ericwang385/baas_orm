@@ -2,6 +2,8 @@ package expr
 
 import (
 	"feorm/variable"
+	"fmt"
+	"hash/fnv"
 	"strconv"
 	"strings"
 )
@@ -11,10 +13,24 @@ type sqlCompileCtx struct {
 	variables    []string
 }
 
+var cache map[uint32]string
+
+//也可以换成其他的hash函数
+func hash(s interface{}) uint32 {
+	h := fnv.New32a()
+	h.Write([]byte(fmt.Sprintf("%v", s)))
+	return h.Sum32()
+}
+
 func (ast *AstNode) CompileToSql(paramIndex int, placeHolderFunc func(idx int) string) (string, func(id string) ([]interface{}, error)) {
-	// todo 添加缓存
+	h := hash(ast)
+	var code string
 	ctx := &sqlCompileCtx{currentIndex: paramIndex}
-	code := ast.compileToSqlInternal(ctx, placeHolderFunc)
+	if c, err := cache[h]; err {
+		code = ast.compileToSqlInternal(ctx, placeHolderFunc)
+	} else {
+		code = c
+	}
 	return code, func(id string) ([]interface{}, error) {
 		if len(ctx.variables) == 0 {
 			return nil, nil
