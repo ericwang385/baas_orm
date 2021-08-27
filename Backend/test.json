@@ -1,0 +1,53 @@
+{
+  "variables": [
+    {
+      "name": "isAdmin",
+      "sql": "select true from users where id=@uid and role='admin'",
+      "expire": 3600
+    }
+  ],
+  "tables": [
+    {
+      "schema": "public",
+      "name": "items",
+      "selectGuard": "uid=@uid or @isAdmin=true",
+      "hiddenColumns": [
+        "secure"
+      ],
+      "lazyColumns": [
+        "name"
+      ],
+      "ColumnRules": [
+        {
+          "Columns": [
+            "control"
+          ],
+          "Operations": [
+            "select"
+          ],
+          "Match": "@isAdmin != true",
+          "Action": "deny"
+        }
+      ],
+      "Relations": [{
+        "ForeignName": "users",
+        "ForeignSchema": "public",
+        "localColumn": "id",
+        "foreignColumn": "id"
+      }]
+    },{
+      "schema": "public",
+      "name": "items",
+      "selectGuard": "uid=@uid or @isAdmin=true",
+      "hiddenColumns": [],
+      "lazyColumns": [],
+      "ColumnRules": [],
+      "Relations": [{
+        "ForeignName": "users",
+        "ForeignSchema": "public",
+        "localColumn": "id",
+        "foreignColumn": "id"
+      }]
+    }
+  ]
+}
