@@ -2,3 +2,4 @@
 .vscode/
 *.output
 y.go
+node_modules
