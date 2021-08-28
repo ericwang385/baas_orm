@@ -35,10 +35,12 @@ export class Query<T extends Entity> {
         return;
     }
 
+    //根据指定的pkcol值获取查询
     get_by_pid(name: string) {
-        return this.where("$1=$2", this.sess.ctx.EntityMap.get(this.entity.name) ,name).get_one()
+        return this.where("$1=$2", this.sess.ctx.TableMap.get(this.entity.name) ,name).get_one()
     }
 
+    //以下三函数分别是获取所有查询结果，获取第一个结果和获取前n个结果
     async get_all(): Promise<any[]> {
         return await this.get_n(null);
     }

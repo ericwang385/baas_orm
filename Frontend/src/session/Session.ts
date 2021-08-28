@@ -54,6 +54,7 @@ export class Session {
     }
 
     select<T extends Entity>(entity: EntityTarget<T>): Query<T> {
+        //select函数先检测session是否存活如是则返回一个Query对象
         if (this.closed) {
             throw new Error('Session Closed');
         } else {
@@ -75,6 +76,7 @@ export class Session {
     }
 
     async query(q: QueryAST): Promise<QueryResponse> {
+        //与后端交互，通过生成的query得到查询结果
         q.SessionId = this.id
         let res = await this.axios.post('http://127.0.0.1:8889/query/select', q, { headers: { 'cookie': 'uid=1' } }).catch(err =>{
             console.log(err)
@@ -83,6 +85,7 @@ export class Session {
     }
 
     private _saveEntity(entities: Entity[]): void {
+        //内部私有函数，检测entity是否被改动如果是则自动update
         for (let entity of entities) {
             let row = entity.export()
             if (row !== null) {
@@ -106,6 +109,7 @@ export class Session {
     }
 
     private _deleteEntity(entities: Entity[]): void {
+        //逻辑同save函数
         for (let entity of entities) {
             let row = entity.export()
             if (row !== null) {

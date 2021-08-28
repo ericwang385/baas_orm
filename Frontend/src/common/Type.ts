@@ -1,3 +1,4 @@
+//各种类型
 export type Column = {
     dataType: string
     name: string
