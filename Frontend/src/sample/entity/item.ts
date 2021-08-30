@@ -54,6 +54,7 @@ export class items extends Entity {
 		throw new Error('lazy load column plz use getname instead');
 	}
 	async getname():Promise<string>{
+		//lazycolumn 的get函数
 		if(typeof this._data.name == "object") {
 			return await this.sess.loadColmn(this,"name")
 		} else {
